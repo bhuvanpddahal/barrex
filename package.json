@@ -1,6 +1,6 @@
 {
   "name": "barrex",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "The bare essentials for state management in React",
   "homepage": "https://github.com/bhuvanpddahal/barrex#readme",
   "repository": {
@@ -10,17 +10,17 @@
   "bugs": {
     "url": "https://github.com/bhuvanpddahal/barrex/issues"
   },
-  "author": "Bhuvan Dahal",
+  "author": "Bhuvan Dahal <bhuvandahal6@gmail.com>",
   "license": "MIT",
   "type": "module",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     }
   },
   "files": [
