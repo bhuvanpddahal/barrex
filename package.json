@@ -1,6 +1,6 @@
 {
   "name": "barrex",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "The bare essentials for state management in React.",
   "homepage": "https://github.com/bhuvanpddahal/barrex#readme",
   "repository": {
