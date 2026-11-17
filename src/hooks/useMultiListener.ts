@@ -23,6 +23,31 @@ function areStatesEqualFn<T>(prevState: T, nextState: T) {
     return prevState === nextState;
 };
 
+/**
+ * Subscribes a React component to multiple notifiers simultaneously, 
+ * offering complete type safety and optimized derivations.
+ * 
+ * @remarks
+ * Bundles multiple notifier subscriptions into a single unified cleanup routine 
+ * and includes smart array/tuple shallow comparison by default.
+ * 
+ * @see [Barrex Docs](./docs/hooks/use-multi-listener.md)
+ * 
+ * @param notifiers A readonly tuple array of source notifiers to subscribe to.
+ * @param selector Optional function to transform or combine the tuple values into a custom shape.
+ * @param areStatesEqual Optional custom comparator. Defaults to a smart tuple-aware shallow equality checker.
+ * @returns The resolved state tuple or the computed selector output.
+ * 
+ * @example
+ * ```tsx
+ * import { useMultiListener } from "barrex";
+ * 
+ * function Header() {
+ *   const [name, theme] = useMultiListener([userNotifier.name, themeNotifier]);
+ *   return <header className={theme}>Welcome, {name}</header>;
+ * }
+ * ```
+ */
 export function useMultiListener<
     const T extends readonly Notifier<unknown>[],
     const U

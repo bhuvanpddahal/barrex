@@ -14,6 +14,27 @@ function ListenerComponent<T, U = T>({
     return children(state, stableChild);
 }
 
+/**
+ * A declarative component wrapper that brings fine-grained reactivity 
+ * and granular performance optimization directly into your JSX tree.
+ * 
+ * @remarks
+ * Confines updates strictly to its render-prop children without forcing 
+ * an entire component function to re-render.
+ * 
+ * @see [Barrex Docs](./docs/components/listener.md)
+ * 
+ * @param props The component props.
+ * 
+ * @example
+ * ```tsx
+ * import { Listener } from "barrex";
+ * 
+ * <Listener notifier={userNotifier.name}>
+ *   {(name) => <h1>Welcome, {name}!</h1>}
+ * </Listener>
+ * ```
+ */
 export const Listener = memo(
     ListenerComponent,
     (prevProps, nextProps) => {
