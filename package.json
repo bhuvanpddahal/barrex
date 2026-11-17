@@ -1,0 +1,51 @@
+{
+  "name": "barrex",
+  "version": "0.0.1",
+  "description": "The bare essentials for state management in React",
+  "homepage": "https://github.com/bhuvanpddahal/barrex#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bhuvanpddahal/barrex.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bhuvanpddahal/barrex/issues"
+  },
+  "author": "Bhuvan Dahal",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "tsup": "^9.0.0",
+    "typescript": "^5.9.3"
+  },
+  "keywords": [
+    "react",
+    "state-management",
+    "proxies",
+    "fine-grained-reactivity",
+    "hooks"
+  ]
+}

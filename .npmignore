@@ -1,0 +1,10 @@
+# Source & Config files (keep them out of the npm tarball)
+src/
+tsconfig.json
+tsup.config.ts
+
+# Git & Editor files
+.git/
+.gitignore
+.vscode/
+.idea/
