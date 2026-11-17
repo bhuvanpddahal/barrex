@@ -1,5 +1,5 @@
 // Utilities
-export { createNotifier } from "./utils/create-notifier";
+export { notifier } from "./utils/notifier";
 export { listener } from "./utils/listener";
 export { multiListener } from "./utils/multi-listener";
 

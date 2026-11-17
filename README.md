@@ -21,24 +21,20 @@ _(Requires `react` >= 18 as a peer dependency)_
 ### 1. Create a Notifier
 
 ```ts
-import { createNotifier } from "barrex";
+import { notifier } from "barrex";
 
 // Define your plain state object type
-interface AppState {
+interface CounterState {
 	count: number;
-	user: {
-		name: string;
-		isLoggedIn: boolean;
-	};
+	increment: () => boolean;
+	reset: () => boolean;
 }
 
-// Create the notifier
-export const appNotifier = createNotifier<AppState>({
+// Initialize the notifier
+export const counterNotifier = notifier<CounterState>({
 	count: 0,
-	user: {
-		name: "Alice",
-		isLoggedIn: false
-	}
+	increment: (): boolean => counterNotifier.count.set((c) => c + 1),
+	reset: (): boolean => counterNotifier.count.set(0)
 });
 ```
 
@@ -47,24 +43,39 @@ export const appNotifier = createNotifier<AppState>({
 ```tsx
 import { useListener } from "barrex";
 
-import { appNotifier } from "./app-notifier";
+import { counterNotifier } from "./counter-notifier";
 
 export function Counter() {
 	// Fine-grained subscription: component only re-renders when `count` changes
-	const count = useListener(appNotifier.count);
+	const count = useListener(counterNotifier.count);
 
 	return (
 		<div>
 			<p>Count: {count}</p>
-			{/* Explicit .set() method with updater support */}
-			<button onClick={() => appNotifier.count.set((c) => c + 1)}>
-				Increment
-			</button>
-			<button onClick={() => appNotifier.count.set(0)}>Reset</button>
+			<button onClick={counterNotifier.increment}>Increment</button>
+			<button onClick={counterNotifier.reset}>Reset</button>
 		</div>
 	);
 }
 ```
+
+---
+
+## References
+
+- **[Core Concepts](./docs/core-concepts.md)**
+- **Utilities**
+    - [notifier](./docs/utils/notifier.md)
+    - [listener](./docs/utils/listener.md)
+    - [multiListener](./docs/utils/multi-listener.md)
+- **Hooks**
+    - [useNotifier](./docs/hooks/use-notifier.md)
+    - [useListener](./docs/hooks/use-listener.md)
+    - [useMultiListener](./docs/hooks/use-multi-listener.md)
+- **Components**
+    - [Listener](./docs/components/listener.md)
+    - [MultiListener](./docs/components/multi-listener.md)
+    - [IsolatedContainer](./docs/components/isolated-container.md)
 
 ---
 

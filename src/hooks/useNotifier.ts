@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import type { InitialState, Notifier } from "../types";
-import { createNotifier } from "../utils/create-notifier";
+import { notifier as createNotifier } from "../utils/notifier";
 
 export function useNotifier<T>(initialState: InitialState<T>): Notifier<T> {
     const [notifier] = useState(() => createNotifier(initialState));

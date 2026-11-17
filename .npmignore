@@ -1,5 +1,6 @@
 # Source & Config files (keep them out of the npm tarball)
 src/
+docs/
 tsconfig.json
 tsup.config.ts
 
