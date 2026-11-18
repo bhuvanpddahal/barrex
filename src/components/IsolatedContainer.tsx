@@ -14,7 +14,7 @@ function IsolatedContainerComponent({ children }: IsolatedContainerProps) {
  * Children inside an `IsolatedContainer` can still re-render independently 
  * based on their own local state or external reactive bindings (like `barrex` notifiers).
  * 
- * @see [Barrex Docs](./docs/components/isolated-container.md)
+ * @see [Barrex Docs](https://github.com/bhuvanpddahal/barrex/blob/main/docs/components/isolated-container.md)
  * 
  * @param props The component props.
  * 

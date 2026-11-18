@@ -7,7 +7,7 @@ import type { ListenerCallback, Notifier, VoidCallback } from "../types";
  * Executes the callback immediately upon registration with the current state value, 
  * and subsequently every time the notifier updates. Returns a cleanup function to unsubscribe.
  * 
- * @see [Barrex Docs](./docs/utils/listener.md)
+ * @see [Barrex Docs](https://github.com/bhuvanpddahal/barrex/blob/main/docs/utils/listener.md)
  * 
  * @param notifier The source notifier instance to subscribe to.
  * @param callback A callback function invoked immediately and on every state update.

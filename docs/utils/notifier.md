@@ -50,7 +50,7 @@ A core design tenet of `barrex` is that **raw functions cannot be notifiers**.
 
 - If the resolved state evaluates to a function at the root level, `notifier` will throw an error:
 
-    > `"A function cannot be a notifier. Replace it with other value, or add it as a property/method inside an object, or don't wrap it with notifier."`
+  > `"A function cannot be a notifier. Replace it with other value, or add it as a property/method inside an object, or don't wrap it with notifier."`
 
 - **The Exception:** Functions _are_ fully supported and safely preserved when they reside as properties or methods inside an object (e.g., helper actions or methods attached to your state object).
 
@@ -68,17 +68,17 @@ Thanks to the underlying proxy architecture, every nested property inside your i
 import { notifier } from "barrex";
 
 interface AuthState {
-	user: {
-		name: string;
-		email: string;
-	} | null;
-	isAuthenticated: boolean;
+  user: {
+    name: string;
+    email: string;
+  } | null;
+  isAuthenticated: boolean;
 }
 
 // Create and export a global notifier instance
 export const authNotifier = notifier<AuthState>({
-	user: null,
-	isAuthenticated: false
+  user: null,
+  isAuthenticated: false,
 });
 ```
 
@@ -87,19 +87,20 @@ export const authNotifier = notifier<AuthState>({
 ```ts
 import { notifier } from "barrex";
 
+type Theme = "light" | "dark";
+
 interface SettingsState {
-	theme: "light" | "dark";
-	setTheme: (theme: "light" | "dark") => void;
+  theme: Theme;
+  setTheme: (theme: Theme) => void;
 }
 
 // Lazy initialization pattern with action methods included
 export const settingsNotifier = notifier<SettingsState>(() => {
-	const savedTheme =
-		(localStorage.getItem("theme") as "light" | "dark") || "light";
+  const savedTheme = (localStorage.getItem("theme") as Theme) || "light";
 
-	return {
-		theme: savedTheme,
-		setTheme: (newTheme) => settingsNotifier.theme.set(newTheme)
-	};
+  return {
+    theme: savedTheme,
+    setTheme: (newTheme) => settingsNotifier.theme.set(newTheme),
+  };
 });
 ```

@@ -67,36 +67,32 @@ This example demonstrates managing a local user object where individual fields a
 import { Listener, useNotifier, useListener } from "barrex";
 
 export function UserProfileCard() {
-	// Create a local notifier bound to this component instance
-	const userNotifier = useNotifier({
-		name: "Alice",
-		age: 40,
-		country: "US",
-		// Methods are supported and ignored by the proxy system
-		updateName: (newName: string) => userNotifier.name.set(newName)
-	});
+  // Create a local notifier bound to this component instance
+  const userNotifier = useNotifier({
+    name: "Alice",
+    age: 40,
+    country: "US",
+    // Methods are supported and ignored by the proxy system
+    updateName: (newName: string) => userNotifier.name.set(newName),
+  });
 
-	return (
-		<div className="card">
-			<h2>
-				<Listener notifier={userNotifier.name}>
-					{(name) => name}
-				</Listener>{" "}
-				<Listener notifier={userNotifier.age}>
-					{(age) => `(${age})`}
-				</Listener>
-			</h2>
+  return (
+    <div className="card">
+      <h2>
+        <Listener notifier={userNotifier.name}>{(name) => name}</Listener>{" "}
+        <Listener notifier={userNotifier.age}>{(age) => `(${age})`}</Listener>
+      </h2>
 
-			{/* Direct mutation via .set() on the property notifier */}
-			<button onClick={() => userNotifier.age.set((a) => a + 1)}>
-				Increment Age
-			</button>
+      {/* Direct mutation via .set() on the property notifier */}
+      <button onClick={() => userNotifier.age.set((a) => a + 1)}>
+        Increment Age
+      </button>
 
-			{/* Calling the defined action method */}
-			<button onClick={() => userNotifier.updateName("Bob")}>
-				Change Name to Bob
-			</button>
-		</div>
-	);
+      {/* Calling the defined action method */}
+      <button onClick={() => userNotifier.updateName("Bob")}>
+        Change Name to Bob
+      </button>
+    </div>
+  );
 }
 ```

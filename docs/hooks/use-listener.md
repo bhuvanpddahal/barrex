@@ -24,9 +24,9 @@ import { useListener } from "barrex";
 
 ```ts
 function useListener<T, U = T>(
-	notifier: Notifier<T>,
-	selector?: StateSelector<T, U>,
-	areStatesEqual?: StatesComparer<U>
+  notifier: Notifier<T>,
+  selector?: StateSelector<T, U>,
+  areStatesEqual?: StatesComparer<U>,
 ): U;
 ```
 
@@ -80,15 +80,15 @@ import { useListener } from "barrex";
 import { counterNotifier } from "./counter-notifier";
 
 export function CounterView() {
-	// Subscribes directly to the counter value
-	const count = useListener(counterNotifier);
+  // Subscribes directly to the counter value
+  const count = useListener(counterNotifier);
 
-	return (
-		<div>
-			<span>Count: {count}</span>
-			<button onClick={() => counterNotifier.set((c) => c + 1)}>+</button>
-		</div>
-	);
+  return (
+    <div>
+      <span>Count: {count}</span>
+      <button onClick={() => counterNotifier.set((c) => c + 1)}>+</button>
+    </div>
+  );
 }
 ```
 
@@ -102,24 +102,24 @@ import { useListener } from "barrex";
 import { filterNotifier } from "./filter-notifier";
 
 export function FilterTags() {
-	// Extract tag list using a selector
-	const tags = useListener(
-		filterNotifier,
-		(state) => state.activeTags,
-		// Custom equality guard: check if tag IDs match to prevent unnecessary re-renders
-		(prev, next) =>
-			prev.length === next.length &&
-			prev.every((tag, i) => tag.id === next[i].id)
-	);
+  // Extract tag list using a selector
+  const tags = useListener(
+    filterNotifier,
+    (state) => state.activeTags,
+    // Custom equality guard: check if tag IDs match to prevent unnecessary re-renders
+    (prev, next) =>
+      prev.length === next.length &&
+      prev.every((tag, i) => tag.id === next[i].id),
+  );
 
-	return (
-		<div className="tag-list">
-			{tags.map((tag) => (
-				<span key={tag.id} className="tag">
-					{tag.label}
-				</span>
-			))}
-		</div>
-	);
+  return (
+    <div className="tag-list">
+      {tags.map((tag) => (
+        <span key={tag.id} className="tag">
+          {tag.label}
+        </span>
+      ))}
+    </div>
+  );
 }
 ```

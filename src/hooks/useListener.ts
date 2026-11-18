@@ -10,7 +10,7 @@ import type { Notifier, StatesComparer, StateSelector } from "../types";
  * Components re-render only when the exact state slice or computed selector 
  * value updates, preventing unnecessary re-renders across the tree.
  * 
- * @see [Barrex Docs](./docs/hooks/use-listener.md)
+ * @see [Barrex Docs](https://github.com/bhuvanpddahal/barrex/blob/main/docs/hooks/use-listener.md)
  * 
  * @template T The raw type of the source notifier state.
  * @template U The resolved type after applying the selector.
@@ -25,7 +25,7 @@ import type { Notifier, StatesComparer, StateSelector } from "../types";
  * import { useListener } from "barrex";
  * 
  * function Counter() {
- *   const count = useListener(counterNotifier);
+ *   const count = useListener(counterNotifier.count);
  *   return <span>Count: {count}</span>;
  * }
  * ```

@@ -24,8 +24,8 @@ import { multiListener } from "barrex";
 
 ```ts
 function multiListener<const T extends readonly Notifier<unknown>[]>(
-	notifiers: T,
-	callback: ListenerCallback<InferNotifierValues<T>>
+  notifiers: T,
+  callback: ListenerCallback<InferNotifierValues<T>>,
 ): VoidCallback;
 ```
 
@@ -64,19 +64,20 @@ Under the hood, `multiListener` maps over every provided notifier to attach indi
 
 ```ts
 import { multiListener } from "barrex";
-import { userNotifier, preferencesNotifier } from "./store";
+
+import { userNotifier, preferencesNotifier } from "./notifiers";
 
 // Subscribe to multiple independent notifiers outside of React
 const unsubscribe = multiListener(
-	[userNotifier, preferencesNotifier],
-	([user, prefs]) => {
-		const sessionPayload = {
-			userId: user.id,
-			theme: prefs.theme,
-			language: prefs.language
-		};
-		localStorage.setItem("app_session", JSON.stringify(sessionPayload));
-	}
+  [userNotifier, preferencesNotifier],
+  ([user, prefs]) => {
+    const sessionPayload = {
+      userId: user.id,
+      theme: prefs.theme,
+      language: prefs.language,
+    };
+    localStorage.setItem("app_session", JSON.stringify(sessionPayload));
+  },
 );
 
 // When terminating or tearing down the service:
@@ -87,17 +88,18 @@ const unsubscribe = multiListener(
 
 ```ts
 import { multiListener } from "barrex";
-import { cartNotifier, authNotifier } from "./store";
+
+import { cartNotifier, authNotifier } from "./notifiers";
 
 // Track cart updates alongside authentication state for telemetry
 const unsubscribe = multiListener(
-	[cartNotifier, authNotifier],
-	([cart, auth]) => {
-		if (auth.isLoggedIn) {
-			console.log(
-				`Telemetry: User ${auth.email} cart now has ${cart.items.length} items.`
-			);
-		}
-	}
+  [cartNotifier, authNotifier],
+  ([cart, auth]) => {
+    if (auth.isLoggedIn) {
+      console.log(
+        `Telemetry: User ${auth.email} cart now has ${cart.items.length} items.`,
+      );
+    }
+  },
 );
 ```

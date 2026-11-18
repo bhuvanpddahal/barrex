@@ -11,7 +11,7 @@ import { notifier as createNotifier } from "../utils/notifier";
  * Tied directly to the component lifecycle. Every property on the initial state 
  * object automatically becomes a first-class sub-notifier.
  * 
- * @see [Barrex Docs](./docs/hooks/use-notifier.md)
+ * @see [Barrex Docs](https://github.com/bhuvanpddahal/barrex/blob/main/docs/hooks/use-notifier.md)
  * 
  * @template T The shape of the initial state.
  * @param initialState The initial value or a lazy initializer function returning the state.

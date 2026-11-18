@@ -64,19 +64,19 @@ Because `barrex` notifiers are stable object references, you can safely pass the
 ### Example 1: Basic Counter with a Selector
 
 ```tsx
-import React from "react";
 import { Listener } from "barrex";
-import { userNotifier } from "./store";
+
+import { userNotifier } from "./user-notifier";
 
 export function UserGreeting() {
-	return (
-		<Listener
-			notifier={userNotifier.profile}
-			selector={(state) => `${state.firstName} ${state.lastName}`}
-		>
-			{(name) => <h1>Welcome back, {name}!</h1>}
-		</Listener>
-	);
+  return (
+    <Listener
+      notifier={userNotifier.profile}
+      selector={(state) => `${state.firstName} ${state.lastName}`}
+    >
+      {(name) => <h1>Welcome back, {name}!</h1>}
+    </Listener>
+  );
 }
 ```
 
@@ -85,46 +85,38 @@ export function UserGreeting() {
 This example demonstrates how to isolate the listener from parent re-renders while keeping a heavy, static header untouched when the counter updates.
 
 ```tsx
-import React, { useState } from "react";
+import { useState } from "react";
 import { Listener } from "barrex";
-import { counterNotifier } from "./store";
+
+import { counterNotifier } from "./counter-notifier";
 
 export function Dashboard() {
-	const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState("light");
 
-	return (
-		<div className={theme}>
-			<button
-				onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-			>
-				Toggle Theme (Triggers Parent Re-render)
-			</button>
+  return (
+    <div className={theme}>
+      <button onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
+        Toggle Theme (Triggers Parent Re-render)
+      </button>
 
-			{/* 
-        isolated={true} ensures Dashboard theme changes 
-        do NOT cause this Listener block to re-render. 
-      */}
-			<Listener
-				notifier={counterNotifier}
-				isolated={true}
-				stableChild={
-					<div className="static-banner">Dashboard Metrics</div>
-				}
-			>
-				{(count, stableChild) => (
-					<div className="counter-card">
-						{stableChild}{" "}
-						{/* Will never re-render when count changes */}
-						<p>Current Count: {count}</p>
-						<button
-							onClick={() => counterNotifier.set((c) => c + 1)}
-						>
-							Increment
-						</button>
-					</div>
-				)}
-			</Listener>
-		</div>
-	);
+      {/* isolated={true} ensures Dashboard theme changes 
+      do NOT cause this Listener block to re-render. */}
+      <Listener
+        notifier={counterNotifier}
+        isolated={true}
+        stableChild={<div className="static-banner">Dashboard Metrics</div>}
+      >
+        {(count, stableChild) => (
+          <div className="counter-card">
+            {stableChild} {/* Will never re-render when count changes */}
+            <p>Current Count: {count}</p>
+            <button onClick={() => counterNotifier.set((c) => c + 1)}>
+              Increment
+            </button>
+          </div>
+        )}
+      </Listener>
+    </div>
+  );
 }
 ```

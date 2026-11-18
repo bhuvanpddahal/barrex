@@ -22,7 +22,7 @@ function MultiListenerComponent({
  * Automatically infers tuple types from the provided notifiers array 
  * and includes smart array equality checking.
  * 
- * @see [Barrex Docs](./docs/components/multi-listener.md)
+ * @see [Barrex Docs](https://github.com/bhuvanpddahal/barrex/blob/main/docs/components/multi-listener.md)
  * 
  * @param props The component props.
  * 

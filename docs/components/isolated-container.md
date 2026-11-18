@@ -67,46 +67,47 @@ Because `IsolatedContainer` forces `React.memo` to always return `true`, **it bl
 ## Usage Example
 
 ```tsx
-import React, { useState } from "react";
+import { useState } from "react";
 import { IsolatedContainer, useListener } from "barrex";
-import { counterNotifier } from "./store";
+
+import { counterNotifier } from "./counter-notifier";
 
 // A static component that should never re-render when the parent types
 function StaticHeader() {
-	console.log("StaticHeader rendered!"); // Will only run once on mount
-	return <h2>Dashboard Overview</h2>;
+  console.log("StaticHeader rendered!"); // Will only run once on mount
+  return <h2>Dashboard Overview</h2>;
 }
 
 // A reactive component that listens directly to a barrex notifier
 function CounterWidget() {
-	const count = useListener(counterNotifier);
+  const count = useListener(counterNotifier);
 
-	return (
-		<div>
-			<p>Count: {count}</p>
-			<button onClick={() => counterNotifier.set((c) => c + 1)}>+</button>
-		</div>
-	);
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => counterNotifier.set((c) => c + 1)}>+</button>
+    </div>
+  );
 }
 
 export function Dashboard() {
-	const [text, setText] = useState("");
+  const [text, setText] = useState("");
 
-	return (
-		<div style={{ padding: "20px" }}>
-			{/* Typing here causes Dashboard to re-render, but StaticHeader and CounterWidget are shielded */}
-			<input
-				type="text"
-				value={text}
-				onChange={(e) => setText(e.target.value)}
-				placeholder="Type to trigger parent re-render..."
-			/>
+  return (
+    <div style={{ padding: "20px" }}>
+      {/* Typing here causes Dashboard to re-render, but StaticHeader and CounterWidget are shielded */}
+      <input
+        type="text"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        placeholder="Type to trigger parent re-render..."
+      />
 
-			<IsolatedContainer>
-				<StaticHeader />
-				<CounterWidget />
-			</IsolatedContainer>
-		</div>
-	);
+      <IsolatedContainer>
+        <StaticHeader />
+        <CounterWidget />
+      </IsolatedContainer>
+    </div>
+  );
 }
 ```

@@ -60,21 +60,21 @@ Just like `Listener`, `MultiListener` supports the `isolated` prop. Because `bar
 ### Example 1: Combining Multiple Notifiers (Tuple Destructuring)
 
 ```tsx
-import React from "react";
 import { MultiListener } from "barrex";
-import { userNotifier, cartNotifier } from "./store";
+
+import { userNotifier, cartNotifier } from "./notifiers";
 
 export function UserCartSummary() {
-	return (
-		<MultiListener notifiers={[userNotifier, cartNotifier]}>
-			{([user, cart]) => (
-				<div>
-					<p>Welcome, {user.name}</p>
-					<p>Items in cart: {cart.itemCount}</p>
-				</div>
-			)}
-		</MultiListener>
-	);
+  return (
+    <MultiListener notifiers={[userNotifier, cartNotifier]}>
+      {([user, cart]) => (
+        <div>
+          <p>Welcome, {user.name}</p>
+          <p>Items in cart: {cart.itemCount}</p>
+        </div>
+      )}
+    </MultiListener>
+  );
 }
 ```
 
@@ -83,48 +83,44 @@ export function UserCartSummary() {
 This example demonstrates combining multiple state sources into a single derived boolean and isolating the component from parent re-renders.
 
 ```tsx
-import React, { useState } from "react";
+import { useState } from "react";
 import { MultiListener } from "barrex";
-import { authNotifier, permissionsNotifier } from "./store";
+
+import { authNotifier, permissionsNotifier } from "./notifiers";
 
 const StaticLockIcon = <span className="lock-icon">🔒</span>;
 
 export function AdminPanel() {
-	const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
-	return (
-		<div className="layout">
-			<button onClick={() => setSidebarOpen(!sidebarOpen)}>
-				Toggle Sidebar (Parent Update)
-			</button>
+  return (
+    <div className="layout">
+      <button onClick={() => setSidebarOpen(!sidebarOpen)}>
+        Toggle Sidebar (Parent Update)
+      </button>
 
-			{/* 
-        MultiListener only re-renders if auth state or permissions change. 
-        Sidebar toggles on the parent will not trigger a re-render here.
-      */}
-			<MultiListener
-				notifiers={[authNotifier, permissionsNotifier]}
-				isolated={true}
-				selector={([auth, permissions]) => {
-					return (
-						auth.isAuthenticated &&
-						permissions.roles.includes("admin")
-					);
-				}}
-				stableChild={StaticLockIcon}
-			>
-				{(isAdmin, stableChild) => (
-					<div className="admin-widget">
-						{stableChild}
-						{isAdmin ? (
-							<button>Open Admin Dashboard</button>
-						) : (
-							<p>Access Denied</p>
-						)}
-					</div>
-				)}
-			</MultiListener>
-		</div>
-	);
+      {/* MultiListener only re-renders if auth state or permissions change. 
+      Sidebar toggles on the parent will not trigger a re-render here. */}
+      <MultiListener
+        notifiers={[authNotifier, permissionsNotifier]}
+        isolated={true}
+        selector={([auth, permissions]) => {
+          return auth.isAuthenticated && permissions.roles.includes("admin");
+        }}
+        stableChild={StaticLockIcon}
+      >
+        {(isAdmin, stableChild) => (
+          <div className="admin-widget">
+            {stableChild}
+            {isAdmin ? (
+              <button>Open Admin Dashboard</button>
+            ) : (
+              <p>Access Denied</p>
+            )}
+          </div>
+        )}
+      </MultiListener>
+    </div>
+  );
 }
 ```

@@ -24,8 +24,8 @@ import { listener } from "barrex";
 
 ```ts
 function listener<T>(
-	notifier: Notifier<T>,
-	callback: ListenerCallback<T>
+  notifier: Notifier<T>,
+  callback: ListenerCallback<T>,
 ): VoidCallback;
 ```
 
@@ -64,15 +64,16 @@ Because it has no dependency on React fibers or hooks, `listener` can run anywhe
 
 ```ts
 import { listener } from "barrex";
-import { authNotifier } from "./store";
+
+import { authNotifier } from "./auth-notifier";
 
 // Subscribe to authentication state globally outside of React
 const unsubscribe = listener(authNotifier, (auth) => {
-	if (auth.isLoggedIn) {
-		console.log(`User logged in: ${auth.user.email}`);
-	} else {
-		console.log("User logged out.");
-	}
+  if (auth.isLoggedIn) {
+    console.log(`User logged in: ${auth.user.email}`);
+  } else {
+    console.log("User logged out.");
+  }
 });
 
 // Later, when tearing down the service or shutting down:
@@ -83,11 +84,12 @@ const unsubscribe = listener(authNotifier, (auth) => {
 
 ```ts
 import { listener } from "barrex";
-import { themeNotifier } from "./store";
+
+import { themeNotifier } from "./theme-notifier";
 
 // Automatically persist user theme preference whenever it changes
 const unsubscribe = listener(themeNotifier, (theme) => {
-	localStorage.setItem("app_theme", theme);
-	document.documentElement.className = theme;
+  localStorage.setItem("app_theme", theme);
+  document.documentElement.className = theme;
 });
 ```

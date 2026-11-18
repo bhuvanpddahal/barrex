@@ -22,7 +22,7 @@ function ListenerComponent<T, U = T>({
  * Confines updates strictly to its render-prop children without forcing 
  * an entire component function to re-render.
  * 
- * @see [Barrex Docs](./docs/components/listener.md)
+ * @see [Barrex Docs](https://github.com/bhuvanpddahal/barrex/blob/main/docs/components/listener.md)
  * 
  * @param props The component props.
  * 

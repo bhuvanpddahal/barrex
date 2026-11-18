@@ -12,7 +12,7 @@ const functionCannotBeNotifierMessage =
  * Serves as the primary entry point for global stores outside of React. Every nested property 
  * automatically becomes a sub-notifier. Raw functions cannot be notifiers and will throw an error.
  * 
- * @see [Barrex Docs](./docs/utils/notifier.md)
+ * @see [Barrex Docs](https://github.com/bhuvanpddahal/barrex/blob/main/docs/utils/notifier.md)
  * 
  * @template T The shape of the initial state.
  * @param initialState The initial value of the state, or a lazy initialization function returning the state.

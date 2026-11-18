@@ -12,7 +12,7 @@ import type {
  * Accepts a tuple array of notifiers, infers their types automatically, executes 
  * the callback immediately with the initial values tuple, and returns a single composite cleanup function.
  * 
- * @see [Barrex Docs](./docs/utils/multi-listener.md)
+ * @see [Barrex Docs](https://github.com/bhuvanpddahal/barrex/blob/main/docs/utils/multi-listener.md)
  * 
  * @param notifiers A readonly tuple array of source notifiers to subscribe to.
  * @param callback A callback function invoked immediately with the values tuple and on subsequent updates.

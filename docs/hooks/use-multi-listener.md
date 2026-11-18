@@ -25,19 +25,19 @@ import { useMultiListener } from "barrex";
 ```ts
 // Overload 1: With a selector transformation
 export function useMultiListener<
-	const T extends readonly Notifier<unknown>[],
-	const U
+  const T extends readonly Notifier<unknown>[],
+  const U,
 >(
-	notifiers: T,
-	selector: StateSelector<InferNotifierValues<T>, U>,
-	areStatesEqual?: StatesComparer<U>
+  notifiers: T,
+  selector: StateSelector<InferNotifierValues<T>, U>,
+  areStatesEqual?: StatesComparer<U>,
 ): U;
 
 // Overload 2: Without a selector (returns a typed value tuple)
 export function useMultiListener<const T extends readonly Notifier<unknown>[]>(
-	notifiers: T,
-	selector?: undefined,
-	areStatesEqual?: StatesComparer<InferNotifierValues<T>>
+  notifiers: T,
+  selector?: undefined,
+  areStatesEqual?: StatesComparer<InferNotifierValues<T>>,
 ): InferNotifierValues<T>;
 ```
 
@@ -77,17 +77,18 @@ The hook bundles subscriptions across all provided notifiers cleanly into a sing
 
 ```tsx
 import { useMultiListener } from "barrex";
-import { userNotifier, themeNotifier } from "./store";
+
+import { userNotifier, themeNotifier } from "./notifiers";
 
 export function UserHeader() {
-	// Automatically typed as [User, Theme]
-	const [user, theme] = useMultiListener([userNotifier, themeNotifier]);
+  // Automatically typed as [User, Theme]
+  const [user, theme] = useMultiListener([userNotifier, themeNotifier]);
 
-	return (
-		<header className={theme}>
-			<h1>Welcome, {user.name}</h1>
-		</header>
-	);
+  return (
+    <header className={theme}>
+      <h1>Welcome, {user.name}</h1>
+    </header>
+  );
 }
 ```
 
@@ -97,21 +98,22 @@ This example demonstrates combining multiple data sources to compute a permissio
 
 ```tsx
 import { useMultiListener } from "barrex";
-import { authNotifier, subscriptionNotifier } from "./store";
+
+import { authNotifier, subscriptionNotifier } from "./notifiers";
 
 export function PremiumFeatureBanner() {
-	// Combine two notifiers into a single derived boolean value
-	const hasAccess = useMultiListener(
-		[authNotifier, subscriptionNotifier],
-		([auth, sub]) => auth.isLoggedIn && sub.tier === "premium",
-		// Optional custom boolean comparator
-		(prev, next) => prev === next
-	);
+  // Combine two notifiers into a single derived boolean value
+  const hasAccess = useMultiListener(
+    [authNotifier, subscriptionNotifier],
+    ([auth, sub]) => auth.isLoggedIn && sub.tier === "premium",
+    // Optional custom boolean comparator
+    (prev, next) => prev === next,
+  );
 
-	if (!hasAccess) {
-		return <p>Upgrade to Premium to unlock this feature.</p>;
-	}
+  if (!hasAccess) {
+    return <p>Upgrade to Premium to unlock this feature.</p>;
+  }
 
-	return <div className="premium-content">🚀 Exclusive Premium Content</div>;
+  return <div className="premium-content">🚀 Exclusive Premium Content</div>;
 }
 ```

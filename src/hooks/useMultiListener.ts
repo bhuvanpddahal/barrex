@@ -31,7 +31,7 @@ function areStatesEqualFn<T>(prevState: T, nextState: T) {
  * Bundles multiple notifier subscriptions into a single unified cleanup routine 
  * and includes smart array/tuple shallow comparison by default.
  * 
- * @see [Barrex Docs](./docs/hooks/use-multi-listener.md)
+ * @see [Barrex Docs](https://github.com/bhuvanpddahal/barrex/blob/main/docs/hooks/use-multi-listener.md)
  * 
  * @param notifiers A readonly tuple array of source notifiers to subscribe to.
  * @param selector Optional function to transform or combine the tuple values into a custom shape.
