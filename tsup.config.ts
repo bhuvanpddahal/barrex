@@ -9,5 +9,5 @@ export default defineConfig({
     clean: true,            // Clean the dist folder before every build
     minify: true,           // Minify production output
     treeshake: true,
-    external: ["react", "react-dom"] // Keep React external to avoid bundling it
+    external: ["react"] // Keep React external to avoid bundling it
 });
