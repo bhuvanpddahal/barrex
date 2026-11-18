@@ -4,6 +4,7 @@ import type {
     StateUpdater,
     VoidCallback
 } from "./types";
+import { NOTIFIER_SYMBOL } from "./symbols";
 import { isArray, isFunction, isObjectOrArray } from "./utils/helpers";
 
 export class NotifierRoot {
@@ -76,6 +77,7 @@ abstract class Node {
             {},
             {
                 get: (_, prop) => {
+                    if (prop === NOTIFIER_SYMBOL) return true;
                     if (prop === "get") return this.get;
                     if (prop === "set") return this.dispatchSet;
                     if (prop === "subscribe") return this.subscribe;

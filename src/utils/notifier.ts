@@ -1,5 +1,5 @@
-import { isFunction } from "./helpers";
 import { NotifierRoot } from "../notifier";
+import { isFunction, isNotifier } from "./helpers";
 import type { InitialState, Notifier } from "../types";
 
 const functionCannotBeNotifierMessage =
@@ -28,14 +28,19 @@ const functionCannotBeNotifierMessage =
  * });
  * ```
  */
-export function notifier<T>(initialState: InitialState<T>): Notifier<T> {
-    const state = (isFunction(initialState)
-        ? (initialState as () => T)()
-        : initialState) as T;
-    if (isFunction(state)) {
+export function notifier<T>(initialState: InitialState<Notifier<T>>): Notifier<T>;
+export function notifier<T>(initialState: InitialState<T>): Notifier<T>;
+export function notifier<T>(initialState: unknown): Notifier<T> {
+    const resolvedState = isFunction(initialState)
+        ? (initialState)()
+        : initialState;
+    if (isFunction(resolvedState)) {
         throw new Error(functionCannotBeNotifierMessage);
     }
-    return createNotifier(state);
+    if (isNotifier(resolvedState)) {
+        return resolvedState as Notifier<T>;
+    }
+    return createNotifier(resolvedState);
 }
 
 function createNotifier<T>(state: T): Notifier<T> {

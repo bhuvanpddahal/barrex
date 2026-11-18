@@ -1,3 +1,6 @@
+import type { Notifier } from "../types";
+import { NOTIFIER_SYMBOL } from "../symbols";
+
 export function isObjectOrArray(value: unknown): value is object {
     return typeof value === "object" && value !== null;
 }
@@ -8,4 +11,13 @@ export function isArray(value: unknown): value is Array<unknown> {
 
 export function isFunction(value: unknown): value is Function {
     return typeof value === "function";
+}
+
+export function isNotifier(value: unknown): value is Notifier<unknown> {
+    return (
+        typeof value === "object" &&
+        value !== null &&
+        !Array.isArray(value) &&
+        (value as any)[NOTIFIER_SYMBOL] === true
+    );
 }
