@@ -4,6 +4,7 @@ import type {
     Notifier,
     VoidCallback
 } from "../types";
+import { areStatesEqual } from "./helpers";
 
 /**
  * Subscribes imperatively to multiple `barrex` notifiers simultaneously outside of React.
@@ -36,9 +37,13 @@ export function multiListener<
     notifiers: T,
     callback: ListenerCallback<InferNotifierValues<T>>
 ): VoidCallback {
+    let prevState: any = null;
     const listener = () => {
-        const state = notifiers.map((notifier) => notifier.get()) as any;
-        callback(state);
+        const nextState = notifiers.map((notifier) => notifier.get()) as any;
+        if (!areStatesEqual(prevState, nextState)) {
+            callback(nextState);
+            prevState = nextState;
+        }
     };
     const unsubscribeFns = notifiers.map((notifier) => {
         return notifier.subscribe(listener);

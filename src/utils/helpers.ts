@@ -21,3 +21,17 @@ export function isNotifier(value: unknown): value is Notifier<unknown> {
         (value as any)[NOTIFIER_SYMBOL] === true
     );
 }
+
+export function areStatesEqual<T>(prevState: T, nextState: T) {
+    if (
+        isArray(prevState) &&
+        isArray(nextState) &&
+        prevState.length === nextState.length
+    ) {
+        return prevState.every((prevValue, index) => {
+            const nextValue = nextState[index];
+            return prevValue === nextValue;
+        });
+    }
+    return prevState === nextState;
+};

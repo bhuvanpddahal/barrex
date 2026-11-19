@@ -26,9 +26,14 @@ export function listener<T>(
     notifier: Notifier<T>,
     callback: ListenerCallback<T>
 ): VoidCallback {
+    let prevState = notifier.get();
     const unsubscribe = notifier.subscribe(() => {
-        callback(notifier.get());
+        const nextState = notifier.get();
+        if (nextState !== prevState) {
+            callback(nextState);
+            prevState = nextState;
+        }
     });
-    callback(notifier.get());
+    callback(prevState);
     return unsubscribe;
 }

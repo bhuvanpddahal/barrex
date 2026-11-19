@@ -7,21 +7,7 @@ import type {
     StateSelector,
     VoidCallback
 } from "../types";
-import { isArray } from "../utils/helpers";
-
-function areStatesEqualFn<T>(prevState: T, nextState: T) {
-    if (
-        isArray(prevState) &&
-        isArray(nextState) &&
-        prevState.length === nextState.length
-    ) {
-        return prevState.every((prevValue, index) => {
-            const nextValue = nextState[index];
-            return prevValue === nextValue;
-        });
-    }
-    return prevState === nextState;
-};
+import { areStatesEqual as areStatesEqualFn } from "../utils/helpers";
 
 /**
  * Subscribes a React component to multiple notifiers simultaneously, 
